@@ -1,6 +1,7 @@
 import { createStore } from "vuex"
+import loginModules from "./modules/login"
 
-const store = createStore({
+const store = createStore<any>({
   state: () => {
     return {
       name: "sxt"
@@ -8,7 +9,14 @@ const store = createStore({
   },
   mutations: {},
   actions: {},
-  getters: {}
+  getters: {},
+  modules: {
+    loginModules
+  }
 })
+
+export function setupStore() {
+  store.dispatch("loginModules/LoadLocalLogin")
+}
 
 export default store

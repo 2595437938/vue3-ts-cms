@@ -17,6 +17,9 @@ module.exports = {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     // 关闭驼峰命名规则
-    "vue/multi-word-component-names": "off"
+    "vue/multi-word-component-names": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "vue/require-v-for-key": "off"
   }
 }
