@@ -60,6 +60,7 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const userMenu = computed(() => store.state.loginModules.userMenus)
+    // 获取路由对象
     const router = useRouter()
     const handleMenuClick = (item: any) => {
       router.push({
