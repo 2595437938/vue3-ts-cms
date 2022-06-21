@@ -9,7 +9,9 @@
           <nav-header @FlodChange="FlodChange" />
         </el-header>
         <el-main class="page-content">
-          <router-view />
+          <div class="page-info">
+            <router-view />
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -53,6 +55,10 @@ export default defineComponent({
 }
 .page-content {
   height: calc(100% - 48px);
+  .page-info {
+    background-color: #fff;
+    border-radius: 5px;
+  }
 }
 .el-header,
 .el-footer {

@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router"
 import type { RouteRecordRaw } from "vue-router"
 import LocalCache from "@/utils/cache"
+import { firstMenu } from "@/utils/menu"
 
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
-    redirect: "/login"
+    redirect: "/main"
   },
   {
     path: "/login",
@@ -35,6 +36,11 @@ router.beforeEach((to) => {
     if (!token) {
       router.push("/login")
     }
+  }
+
+  // main冲欧冠定向
+  if (to.path === "/main") {
+    return firstMenu.url
   }
 })
 export default router

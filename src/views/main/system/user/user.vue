@@ -1,16 +1,34 @@
 <template>
   <div class="user">
-    <h2>user</h2>
+    <div class="search">
+      <xt-form v-bind="IfromConfig" v-model="formData" />
+    </div>
+    <div class="content"></div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, ref } from "vue"
+import XtForm from "@/base-ui/form"
+import { IfromConfig } from "./config/search.config"
 
 export default defineComponent({
   name: "user",
+  components: {
+    XtForm
+  },
   setup() {
-    return {}
+    const formData = ref({
+      id: "",
+      name: "",
+      password: "",
+      sport: "",
+      createTime: ""
+    })
+    return {
+      IfromConfig,
+      formData
+    }
   }
 })
 </script>

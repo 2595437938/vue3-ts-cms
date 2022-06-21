@@ -5,7 +5,7 @@
       <span v-if="!collapse" class="title">太平山修真我</span>
     </div>
     <el-menu
-      default-active="2"
+      :default-active="defaultValue"
       class="el-menu-vertical"
       :collapse="collapse"
       background-color="#0c2135"
@@ -48,7 +48,8 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from "vue"
 import { useStore } from "vuex"
-import { useRouter } from "vue-router"
+import { useRouter, useRoute } from "vue-router"
+import { pathMapToMenu } from "@/utils/menu"
 
 export default defineComponent({
   props: {
@@ -60,8 +61,13 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const userMenu = computed(() => store.state.loginModules.userMenus)
-    // 获取路由对象
     const router = useRouter()
+    // 获取路由对象
+    const route = useRoute()
+    const currentPath = route.path
+    // data
+    const menu = pathMapToMenu(userMenu.value, currentPath)
+    const defaultValue = ref(menu.id + "")
     const handleMenuClick = (item: any) => {
       router.push({
         path: item.url ?? "/not-found"
@@ -69,6 +75,7 @@ export default defineComponent({
     }
     return {
       userMenu,
+      defaultValue,
       handleMenuClick
     }
   }

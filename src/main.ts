@@ -13,12 +13,12 @@ import xtRequest from "./service/index"
 import * as ElementPlusIconsVue from "@element-plus/icons-vue"
 
 const app = createApp(App)
-app.use(router)
 app.use(store)
+// 刷新页面重新加载vuex数据
+setupStore()
+app.use(router)
 app.use(ElementPlus)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
-// 刷新页面重新加载vuex数据
-setupStore()
 app.mount("#app")

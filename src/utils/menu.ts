@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+import { id } from "element-plus/es/locale"
 import { RouteRecordRaw } from "vue-router"
 
+let firstMenu: any = null
 export function MenuToRouter(usermenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
 
@@ -17,6 +19,9 @@ export function MenuToRouter(usermenus: any[]): RouteRecordRaw[] {
       if (menu.type === 2) {
         const route = allRouter.find((item) => item.path === menu.url)
         if (route) routes.push(route)
+        if (!firstMenu) {
+          firstMenu = menu
+        }
       } else {
         _recuresGetRoute(menu.children)
       }
@@ -25,3 +30,30 @@ export function MenuToRouter(usermenus: any[]): RouteRecordRaw[] {
   _recuresGetRoute(usermenus)
   return routes
 }
+// 寻找父级稍微
+export function pathMapBreadMenu(userMenus: any[], currentPath: string) {
+  const breads: any[] = []
+  pathMapToMenu(userMenus, currentPath, breads)
+  return breads
+}
+// /main/system/role  -> type === 2 对应menu
+export function pathMapToMenu(
+  userMenus: any[],
+  currentPath: string,
+  breads?: any[]
+): any {
+  for (const menu of userMenus) {
+    if (menu.type === 1) {
+      const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
+      if (findMenu) {
+        breads?.push({ name: menu.name, path: menu.url })
+        breads?.push({ name: findMenu.name, path: findMenu.url })
+        return findMenu
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu
+    }
+  }
+}
+
+export { firstMenu }
