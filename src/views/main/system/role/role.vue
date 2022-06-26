@@ -1,16 +1,33 @@
 <template>
   <div class="role">
-    <h2>role</h2>
+    <div class="search">
+      <page-search :IfromConfig="IfromConfig"></page-search>
+    </div>
+    <page-content
+      :contentTableConfig="contentTableConfig"
+      pageName="role"
+    ></page-content>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue"
+import PageContent from "@/components/page-content/index"
+import PageSearch from "@/components/page-search"
+import { IfromConfig } from "./config/search.config"
+import { contentTableConfig } from "./config/content.config"
 
 export default defineComponent({
   name: "role",
+  components: {
+    PageContent,
+    PageSearch
+  },
   setup() {
-    return {}
+    return {
+      contentTableConfig,
+      IfromConfig
+    }
   }
 })
 </script>

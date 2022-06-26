@@ -10,7 +10,9 @@
         </el-header>
         <el-main class="page-content">
           <div class="page-info">
+            <!-- <transition mode="out-in"> -->
             <router-view />
+            <!-- </transition> -->
           </div>
         </el-main>
       </el-container>
@@ -42,6 +44,15 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
+.v-enter,
+.v-leave-to {
+  opacity: 0;
+  transform: translateZ(20px);
+}
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
 .main {
   position: fixed;
   top: 0;

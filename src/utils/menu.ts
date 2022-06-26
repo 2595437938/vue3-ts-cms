@@ -56,4 +56,21 @@ export function pathMapToMenu(
   }
 }
 
+// 获取当前登录人所有按钮权限
+export function mapMenusToPermissions(userMenus: any[]) {
+  const permission: string[] = []
+
+  const _recuresGetPermissions = (menus: any[]) => {
+    for (const menu of menus) {
+      if (menu.type === 1 || menu.type === 2) {
+        _recuresGetPermissions(menu.children ?? [])
+      } else if (menu.type === 3) {
+        permission.push(menu.permission)
+      }
+    }
+  }
+  _recuresGetPermissions(userMenus)
+  return permission
+}
+
 export { firstMenu }

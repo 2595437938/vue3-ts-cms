@@ -1,50 +1,45 @@
 <template>
-  <div class="hy-form">
+  <div class="xt-form">
     <div class="header">
       <slot name="header"></slot>
     </div>
     <el-form :label-width="labelWidth">
       <el-row>
-        <template v-for="item in formItems" :key="item.label">
+        <template v-for="item in formItems" :key="item.lable">
           <el-col v-bind="colLayout">
-            <el-form-item
-              v-if="!item.isHidden"
-              :label="item.label"
-              :style="itemStyle"
-            >
+            <el-form-item :label="item.label" :style="ItemStyle">
               <template
                 v-if="item.type === 'input' || item.type === 'password'"
               >
                 <el-input
-                  :placeholder="item.placeholder"
                   v-bind="item.otherOptions"
+                  :placeholder="item.placeholder"
                   :show-password="item.type === 'password'"
-                  :model-value="modelValue[`${item.field}`]"
-                  @update:modelValue="handleValueChange($event, item.field)"
-                />
+                  v-model="formData[`${item.field}`]"
+                ></el-input>
               </template>
               <template v-else-if="item.type === 'select'">
                 <el-select
                   :placeholder="item.placeholder"
-                  v-bind="item.otherOptions"
                   style="width: 100%"
-                  :model-value="modelValue[`${item.field}`]"
-                  @update:modelValue="handleValueChange($event, item.field)"
+                  v-model="formData[`${item.field}`]"
                 >
-                  <el-option
-                    v-for="option in item.options"
-                    :key="option.value"
-                    :value="option.value"
-                    >{{ option.title }}</el-option
-                  >
+                  <template v-for="option in item.options" :key="option.value">
+                    <el-option
+                      :value="option.value"
+                      v-bind="item.otherOptions"
+                      >{{ option.label }}</el-option
+                    >
+                  </template>
                 </el-select>
               </template>
               <template v-else-if="item.type === 'datepicker'">
                 <el-date-picker
-                  style="width: 100%"
                   v-bind="item.otherOptions"
-                  :model-value="modelValue[`${item.field}`]"
-                  @update:modelValue="handleValueChange($event, item.field)"
+                  format="YYYY-MM-DD"
+                  value-format="YYYY-MM-DD"
+                  style="width: 100%"
+                  v-model="formData[`${item.field}`]"
                 ></el-date-picker>
               </template>
             </el-form-item>
@@ -59,7 +54,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue"
+import { defineComponent, PropType, ref, watch, computed } from "vue"
 import { IFormItem } from "../type/index"
 
 export default defineComponent({
@@ -76,7 +71,7 @@ export default defineComponent({
       type: String,
       default: "100px"
     },
-    itemStyle: {
+    ItemStyle: {
       type: Object,
       default: () => ({ padding: "10px 40px" })
     },
@@ -93,32 +88,23 @@ export default defineComponent({
   },
   emits: ["update:modelValue"],
   setup(props, { emit }) {
-    // const formData = ref({ ...props.modelValue })
-
-    // watch(
-    //   formData,
-    //   (newValue) => {
-    //     console.log(newValue)
-    //     emit('update:modelValue', newValue)
-    //   },
-    //   {
-    //     deep: true
-    //   }
-    // )
-
-    const handleValueChange = (value: any, field: string) => {
-      emit("update:modelValue", { ...props.modelValue, [field]: value })
-    }
-
+    const formData = ref({ ...props.modelValue })
+    watch(
+      formData,
+      (newValue) => {
+        emit("update:modelValue", newValue)
+      },
+      { deep: true }
+    )
     return {
-      handleValueChange
+      formData
     }
   }
 })
 </script>
 
 <style scoped lang="less">
-.hy-form {
+.xt-form {
   padding-top: 22px;
 }
 </style>

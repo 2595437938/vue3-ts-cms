@@ -5,33 +5,26 @@ export const IfromConfig: Ifrom = {
     {
       field: "name",
       type: "input",
-      label: "用户名",
+      label: "商品名称",
       rules: [],
-      placeholder: "请输入用户名"
+      placeholder: "请输入商品名称"
     },
     {
-      field: "id",
+      field: "oldPrice",
       type: "input",
-      label: "ID",
+      label: "原价格",
       rules: [],
-      placeholder: "请输入ID"
+      placeholder: "请输入原价格"
     },
     {
-      field: "realname",
+      field: "newPrice",
       type: "input",
-      label: "真实姓名",
+      label: "现价格",
       rules: [],
-      placeholder: "请输入真实姓名"
+      placeholder: "请输入现价格"
     },
     {
-      field: "cellphone",
-      type: "input",
-      label: "手机号",
-      rules: [],
-      placeholder: "请输入手机号"
-    },
-    {
-      field: "enable",
+      field: "status",
       type: "select",
       label: "状态",
       rules: [],

@@ -54,7 +54,7 @@ class XTRequest {
     )
   }
   // 单独拦截某个请求与响应
-  request<T>(config: XTRequestConfig<T>): Promise<T> {
+  request<T = any>(config: XTRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       if (config.interceptors?.requestIntceptors) {
         config = config.interceptors.requestIntceptors(config)
@@ -75,25 +75,25 @@ class XTRequest {
   }
 
   // 封装独立的 get post pacth delete
-  get<T>(config?: XTRequestConfig<T>): Promise<T> {
+  get<T = any>(config?: XTRequestConfig<T>): Promise<T> {
     return this.request<T>({
       method: "GET",
       ...config
     })
   }
-  post<T>(config?: XTRequestConfig<T>): Promise<T> {
+  post<T = any>(config?: XTRequestConfig<T>): Promise<T> {
     return this.request<T>({
       method: "POST",
       ...config
     })
   }
-  patch<T>(config?: XTRequestConfig<T>): Promise<T> {
+  patch<T = any>(config?: XTRequestConfig<T>): Promise<T> {
     return this.request<T>({
       method: "PATCH",
       ...config
     })
   }
-  delete<T>(config?: XTRequestConfig<T>): Promise<T> {
+  delete<T = any>(config?: XTRequestConfig<T>): Promise<T> {
     return this.request<T>({
       method: "DELETE",
       ...config
