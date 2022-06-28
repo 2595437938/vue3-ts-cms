@@ -1,8 +1,8 @@
 import { ref } from "vue"
 import pageModal from "@/components/page-modal"
 
-type callFn = () => void
-export function usePageModal(newCb: callFn, editCb: callFn) {
+type callFn = (item?: any) => void
+export function usePageModal(newCb?: callFn, editCb?: callFn) {
   const pageModalRef = ref<InstanceType<typeof pageModal>>()
   const defaultInfo = ref({})
   const handleNewClick = () => {
@@ -19,7 +19,7 @@ export function usePageModal(newCb: callFn, editCb: callFn) {
       pageModalRef.value.dialogVisible = true
       pageModalRef.value.title = "编辑"
     }
-    editCb && editCb()
+    editCb && editCb(formData)
   }
   return [pageModalRef, handleNewClick, handleEditClick, defaultInfo]
 }

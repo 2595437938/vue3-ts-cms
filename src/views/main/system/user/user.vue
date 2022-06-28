@@ -60,7 +60,7 @@ export default defineComponent({
       )
       formItem!.isHidden = true
     }
-    // 添加部门和角色列表
+    // 添加部门和角色列表 不需要可以不传
     const store = useStore()
     const modalConfigRef = computed(() => {
       const departmentItem = modalConfig.formItems.find(

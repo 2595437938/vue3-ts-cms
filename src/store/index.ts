@@ -1,6 +1,7 @@
 import { createStore } from "vuex"
 import loginModules from "./modules/login"
 import system from "./modules/main/system/system"
+import dashboard from "./modules/main/analysis/dashboard"
 import { getPageListdata } from "@/service/main/system/system"
 
 const store = createStore<any>({
@@ -8,7 +9,8 @@ const store = createStore<any>({
     return {
       name: "sxt",
       entireDepartment: [],
-      entireRole: []
+      entireRole: [],
+      entireMenu: []
     }
   },
   mutations: {
@@ -17,6 +19,9 @@ const store = createStore<any>({
     },
     changeRole(state, data) {
       state.entireRole = data
+    },
+    changeMenu(state, data) {
+      state.entireMenu = data
     }
   },
   actions: {
@@ -32,20 +37,24 @@ const store = createStore<any>({
         size: 1000
       })
       const { list: roleList } = roleResult.data
+      const menuResult = await getPageListdata("/menu/list", {})
+      const { list: meunList } = menuResult.data
       content.commit("changeDepartment", departmentList)
       content.commit("changeRole", roleList)
+      content.commit("changeMenu", meunList)
     }
   },
   getters: {},
   modules: {
     loginModules,
-    system
+    system,
+    dashboard
   }
 })
 
 export function setupStore() {
   store.dispatch("loginModules/LoadLocalLogin")
-  store.dispatch("getEntireData")
+  // store.dispatch("getEntireData")
 }
 
 export default store

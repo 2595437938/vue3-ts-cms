@@ -8,6 +8,7 @@
       destroy-on-close
     >
       <xt-form v-bind="modalConfig" v-model="formData"></xt-form>
+      <slot></slot>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
@@ -33,6 +34,10 @@ export default defineComponent({
       required: true
     },
     defaultInfo: {
+      type: Object,
+      default: () => ({})
+    },
+    otherInfo: {
       type: Object,
       default: () => ({})
     },
@@ -64,7 +69,7 @@ export default defineComponent({
         // 编辑
         const params = {
           pageName: props.pageName,
-          editData: { ...formData.value },
+          editData: { ...formData.value, ...props.otherInfo },
           id: props.defaultInfo.id
         }
         store.dispatch("system/editPageDataAction", params)
@@ -72,7 +77,7 @@ export default defineComponent({
         // 新增
         const params = {
           pageName: props.pageName,
-          newData: { ...formData.value }
+          newData: { ...formData.value, ...props.otherInfo }
         }
         store.dispatch("system/createPageDataAction", params)
       }

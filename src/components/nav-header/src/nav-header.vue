@@ -18,7 +18,7 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item
+              <el-dropdown-item @click="handleExitClick"
                 ><el-icon><CloseBold /></el-icon>退出登录</el-dropdown-item
               >
               <el-dropdown-item>用户信息</el-dropdown-item>
@@ -35,8 +35,9 @@
 import { defineComponent, ref, computed } from "vue"
 import { useStore } from "vuex"
 import navBread from "./nav-bread.vue"
-import { useRoute } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import { pathMapBreadMenu } from "@/utils/menu"
+import LocalCache from "@/utils/cache"
 
 export default defineComponent({
   components: {
@@ -60,12 +61,19 @@ export default defineComponent({
       return pathMapBreadMenu(userMenus, currentPath)
     })
     console.log(bread)
+    const router = useRouter()
+    // 退出登录
+    const handleExitClick = () => {
+      LocalCache.deleteCache("token")
+      router.push("/login")
+    }
 
     return {
       isFold,
       name,
       bread,
-      handleFlodClick
+      handleFlodClick,
+      handleExitClick
     }
   }
 })

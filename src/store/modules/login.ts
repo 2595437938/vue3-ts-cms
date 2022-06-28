@@ -44,6 +44,8 @@ const loginModules: Module<any, any> = {
       const LoginResult = await AccountLogin(payload)
       const { id, token } = LoginResult.data
       context.commit("changeToken", token)
+      // 初始化数据获取
+      context.dispatch("getEntireData", null, { root: true })
       // 获取登陆数据以外的info
       const UserInfoResult = await getUserInfo(id)
       const userInfo = UserInfoResult.data
@@ -59,6 +61,8 @@ const loginModules: Module<any, any> = {
       const token = LocalCache.getCache("token")
       if (token) {
         context.commit("changeToken", token)
+        // 初始化数据获取
+        context.dispatch("getEntireData", null, { root: true })
         const userInfo = LocalCache.getCache("userInfo")
         if (userInfo) {
           context.commit("changeUserInfo", userInfo)
